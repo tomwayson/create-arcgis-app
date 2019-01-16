@@ -1,9 +1,11 @@
 import React from 'react';
+import './Home.scss';
 
 function Home() {
   return (
-    <div>
-      <h2>Home</h2>
+    <div className="jumbotron">
+      <h1 className="display-3 text-light text-center mb-5">Ambitious ArcGIS App</h1>
+      {/* TODO: search component */}
     </div>
   );
 }
