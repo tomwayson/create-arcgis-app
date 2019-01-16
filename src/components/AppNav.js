@@ -30,27 +30,25 @@ class AppNav extends React.Component {
   }
   render() {
     return (
-      <div>
-        <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="#">Ambitious ArcGIS App</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav navbar>
-              <NavItem>
-                <NavLink className="nav-link" exact to="/">Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink  className="nav-link" to="/items">Items</NavLink>
-              </NavItem>
-            </Nav>
-            <Nav navbar className="ml-auto">
-              <NavItem>
-                <Button color="link" onClick={this.signIn} className="nav-link">Sign In</Button>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
+      <Navbar color="dark" dark expand="md" fixed="top">
+        <NavbarBrand href="#">Ambitious ArcGIS App</NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav navbar>
+            <NavItem>
+              <NavLink className="nav-link" exact to="/">Home</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink  className="nav-link" to="/items">Items</NavLink>
+            </NavItem>
+          </Nav>
+          <Nav navbar className="ml-auto">
+            <NavItem>
+              <Button color="link" onClick={this.signIn} className="nav-link">Sign In</Button>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
     );
   }
 }
