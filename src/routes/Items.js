@@ -3,6 +3,7 @@ import { Alert } from 'reactstrap';
 import { searchItems } from '@esri/arcgis-rest-items';
 import './Items.scss';
 import AgoSearch from '../components/AgoSearch';
+import ItemsTable from '../components/ItemsTable';
 
 // parse search term from query string
 function parseSearch(search) {
@@ -95,33 +96,6 @@ class Items extends React.Component {
       </>
     );  
   }
-}
-
-function ItemsTable ({ items }) {
-  return (
-    <table className="table table-striped table-bordered table-hover">
-      <thead className="thead-dark">
-        <tr>
-          <th>Title</th>
-          <th>Type</th>
-          <th>Owner</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          items.map(item => {
-            return (
-              <tr key={item.id}>
-                <td>{item.title}</td>
-                <td>{item.type}</td>
-                <td>{item.owner}</td>
-              </tr>
-            );
-          })
-        }
-      </tbody>
-    </table>
-  ); 
 }
 
 export default Items;
