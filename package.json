@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@esri/arcgis-rest-common-types": "^1.14.4",
+    "@esri/arcgis-rest-items": "^1.14.4",
+    "@esri/arcgis-rest-request": "^1.14.4",
     "bootstrap": "^4.2.1",
     "node-sass": "^4.11.0",
     "react": "^16.7.0",
