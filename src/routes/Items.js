@@ -1,14 +1,15 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 import { searchItems } from '@esri/arcgis-rest-items';
+import './Items.scss';
+import AgoSearch from '../components/AgoSearch';
 
 // parse search term from query string
 function parseSearch(search) {
   // NOTE: URLSearchParams() only works in real browsers,
   // for IE support use https://www.npmjs.com/package/query-string 
   const params = search && new URLSearchParams(search);
-  // TODO: don't default to '*'?
-  return params ? params.get('q') : '*';
+  return params && params.get('q');
 }
 
 function didSearchParamsChange(prevLocation, location) {
@@ -27,9 +28,17 @@ class Items extends React.Component {
       total: 0
     };
   }
+  onSearch = (q) => {
+    // update the route query params after the user submits the inline search form
+    // TODO: use current location to build new path w/ other query params
+    const path = `/items?q=${q}`;
+    // NOTE: `history` is passed in by react-router
+    // see: https://tylermcginnis.com/react-router-programmatically-navigate/
+    this.props.history.push(path)
+  }
   doSearch() {
     const { location } = this.props;
-    const q = parseSearch(location.search);
+    const q = parseSearch(location.search) || '*';
     // execute search and update state
     return searchItems({
       // TODO: get start and num out of query string too
@@ -70,10 +79,10 @@ class Items extends React.Component {
       <>
         <div className="row mb-2">
           <div className="col-9">
-            <h2>Your search for {q} yielded {total} items</h2>
+            <h2>Your search for "{q}" yielded {total} items</h2>
           </div>
           <div className="col-3">
-            {/* TODO: search component */}
+            <AgoSearch q={q} onSearch={this.onSearch} className="search-form-inline" size="sm" />
           </div>
         </div>
         <div className="row">
