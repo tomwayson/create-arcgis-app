@@ -1,3 +1,5 @@
+import React from 'react';
+
 function ItemsTable ({ items }) {
   return (
     <table className="table table-striped table-bordered table-hover">
