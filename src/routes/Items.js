@@ -1,10 +1,7 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 import { searchItems } from '@esri/arcgis-rest-items';
-import './Items.scss';
-import AgoSearch from '../components/AgoSearch';
-import ItemsTable from '../components/ItemsTable';
-import ItemPager from '../components/ItemPager';
+import ItemsPage from '../components/ItemsPage';
 
 // parse search params out of query string w/ defaults
 function parseSearch(search) {
@@ -30,7 +27,6 @@ function didSearchParamsChange(prevLocation, location) {
   return search !== prevSearch;
 }
 
-// NOTE: location is passed in by react router
 class Items extends React.Component {
   constructor(props) {
     super(props);
@@ -40,27 +36,19 @@ class Items extends React.Component {
       total: 0
     };
   }
-  onSearch = (q) => {
-    // update the route query params after the user submits the inline search form
+  onParamsChange = (q, start) => {
+    // update the route query params after the user either
+    // submits the inline search form or links to a new page
     // NOTE: `location` and `history` are passed in by react-router
     // see: https://tylermcginnis.com/react-router-programmatically-navigate/
     const {
       history,
       location 
     } = this.props;
-    const path = `${location.pathname}?q=${q}`;
-    history.push(path);
-  }
-  changePage = (page) => {
-    // calculate next start record based on the number of records per page
-    const {
-      history,
-      location 
-    } = this.props;
-    const { num, q } = parseSearch(location.search);
-    const nextStart = ((page - 1) * num) + 1;
-    // change the page by updating the start query param
-    const path = `${location.pathname}?q=${q}&start=${nextStart}`;
+    let path = `${location.pathname}?q=${q}`;
+    if (start) {
+      path = `${path}&start=${start}`;
+    }
     history.push(path);
   }
   doSearch() {
@@ -82,6 +70,7 @@ class Items extends React.Component {
       this.setState({ error: e.message || e })
     });
   }
+  // react lifecyle methods
   componentDidMount () {
     // execute the search when this route first loads
     this.doSearch();
@@ -108,28 +97,10 @@ class Items extends React.Component {
     // parse search params out of the query string
     const { location } = this.props;
     const { num, q, start } = parseSearch(location.search);
-    // compute current page number based on start record
-    // and the number of records per page
-    const pageNumber = ((start - 1) / num) + 1;
+    // render the items page
     return (
-      <>
-        <div className="row mb-2">
-          <div className="col-9">
-            <h2>Your search for "{q}" yielded {total} items</h2>
-          </div>
-          <div className="col-3">
-            <AgoSearch q={q} onSearch={this.onSearch} className="search-form-inline" size="sm" />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            {/* TODO: extents map component */}
-            <ItemsTable items={results} />
-            <ItemPager pageSize={num} totalCount={total} pageNumber={pageNumber} changePage={this.changePage} />
-          </div>
-        </div>
-      </>
-    );  
+      <ItemsPage results={results} total={total} num={num} q={q} start={start} onParamsChange={this.onParamsChange} />
+    );
   }
 }
 
