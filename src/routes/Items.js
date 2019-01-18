@@ -4,13 +4,22 @@ import { searchItems } from '@esri/arcgis-rest-items';
 import './Items.scss';
 import AgoSearch from '../components/AgoSearch';
 import ItemsTable from '../components/ItemsTable';
+import ItemPager from '../components/ItemPager';
 
 // parse search term from query string
 function parseSearch(search) {
   // NOTE: URLSearchParams() only works in real browsers,
   // for IE support use https://www.npmjs.com/package/query-string 
   const params = search && new URLSearchParams(search);
-  return params && params.get('q');
+  return params 
+  ? {
+      num: params.get('num') || 10,
+      // NOTE: default q is set right before executing query,
+      // if set here, an empty search box appears to be out of sync
+      q: params.get('q'),
+      start: params.get('start') || 1
+    }
+  : {};
 }
 
 function didSearchParamsChange(prevLocation, location) {
@@ -31,19 +40,38 @@ class Items extends React.Component {
   }
   onSearch = (q) => {
     // update the route query params after the user submits the inline search form
-    // TODO: use current location to build new path w/ other query params
-    const path = `/items?q=${q}`;
-    // NOTE: `history` is passed in by react-router
+    // NOTE: `location` and `history` are passed in by react-router
     // see: https://tylermcginnis.com/react-router-programmatically-navigate/
-    this.props.history.push(path)
+    const {
+      history,
+      location 
+    } = this.props;
+    const path = `${location.pathname}/items?q=${q}`;
+    history.push(path)
+  }
+  changePage = (page) => {
+    // calculate next start record based on the number of records per page
+    const {
+      history,
+      location 
+    } = this.props;
+    console.log({ location });
+    const { num, q } = parseSearch(location.search);
+    const nextStart = ((page - 1) * num) + 1;
+    // change the page by updating the start query param
+    const path = `${location.pathname}?q=${q}&start=${nextStart}`;
+    history.push(path);
   }
   doSearch() {
     const { location } = this.props;
-    const q = parseSearch(location.search) || '*';
+    // parse search params out of query string w/ defaults
+    const searchForm = parseSearch(location.search);
+    if (!searchForm.q) {
+      searchForm.q = '*';
+    }
     // execute search and update state
     return searchItems({
-      // TODO: get start and num out of query string too
-      searchForm: { q, start: 1, num: 10 }
+      searchForm
     })
     .then(({ results, total }) => {
       this.setState({ results, total });
@@ -74,8 +102,12 @@ class Items extends React.Component {
       // TODO: better loading state
       return 'loading...';
     }
+    // parse search params out of the query string
     const { location } = this.props;
-    const q = parseSearch(location.search);
+    const { num, q, start } = parseSearch(location.search);
+    // compute current page number based on start record
+    // and the number of records per page
+    const pageNumber = ((start - 1) / num) + 1;
     return (
       <>
         <div className="row mb-2">
@@ -90,7 +122,7 @@ class Items extends React.Component {
           <div className="col-12">
             {/* TODO: extents map component */}
             <ItemsTable items={results} />
-            {/* TODO: item pager component */}
+            <ItemPager pageSize={num} totalCount={total} pageNumber={pageNumber} changePage={this.changePage} />
           </div>
         </div>
       </>
