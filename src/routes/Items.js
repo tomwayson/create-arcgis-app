@@ -55,7 +55,6 @@ class Items extends React.Component {
       history,
       location 
     } = this.props;
-    console.log({ location });
     const { num, q } = parseSearch(location.search);
     const nextStart = ((page - 1) * num) + 1;
     // change the page by updating the start query param

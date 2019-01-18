@@ -14,51 +14,59 @@ function ItemPager ({ pageSize, totalCount, pageNumber, changePage }) {
     // don't show pagination if only one page
     return null;
   }
-  const currentPage = pageNumber;
 
+  // get the range of pages to show
+  const currentPage = pageNumber;
   const start = (totalPages > 10 && currentPage > 6) ? currentPage - 5 : 1;
   const end = (totalPages > start + 9) ? start + 9 : totalPages;
+  const isFirstPage = currentPage === 1;
+  const lastPage = totalPages;
+  const isLastPage = pageNumber >= lastPage;
 
-  const pages = [];
+  // generate links for each page in the range
+  const pageLinks = [];
   for (let i = start; i <= end; i++) {
-    pages.push({ number: i, isActive: i === currentPage });
+    pageLinks.push(<PageItem pageNumber={i} currentPage={currentPage} changePage={changePage} key={i}>{i}</PageItem>);
   }
   return (
     <ul className="pagination">
-      {/* TODO: first and previous links */}
-      {
-        pages.map(page => {
-          return <PageItem pageNumber={page.number} isActive={page.isActive} changePage={changePage} key={page.number} />
-        })
-      }
-      {/* TODO: next and last links */}
+      {/* first and previous links */}
+      <PageItem pageNumber={1} currentPage={currentPage} changePage={changePage} key="&laquo;" label="First page" disabled={isFirstPage}>&laquo;</PageItem>
+      <PageItem pageNumber={currentPage - 1} currentPage={currentPage} changePage={changePage} key="&lsaquo;" label="Previous page" disabled={isFirstPage}>&lsaquo;</PageItem>
+      {/* a link for each page */}
+      { pageLinks }
+      {/* next and last links */}
+      <PageItem pageNumber={currentPage + 1} currentPage={currentPage} changePage={changePage} key="&rsaquo;" label="Next page" disabled={isLastPage}>&rsaquo;</PageItem>
+      <PageItem pageNumber={lastPage} currentPage={currentPage} changePage={changePage} key="&raquo;" label="Last page" disabled={isLastPage}>&raquo;</PageItem>
     </ul>
   )
 }
 
 class PageItem extends React.Component {
-  constructor (props) {
-    super(props);
-  }
   onClick = (e) => {
     e.preventDefault();
     const {
       changePage,
+      disabled,
       pageNumber
     } = this.props;
-    if (changePage) {
+    if (!disabled && changePage) {
       changePage(pageNumber);
     }
   }
   render () {
     const {
-      isActive,
-      pageNumber
+      currentPage,
+      disabled,
+      pageNumber,
+      label
     } = this.props;
+    const isActive = !disabled && pageNumber === currentPage;
     const className = `page-item${ isActive && ' active'}`;
+    const ariaLabel = disabled ? 'disabled' : label || `Page ${pageNumber}`;
     return (
       <li className={className}>
-        <a className="page-link" href="" onClick={this.onClick}>{pageNumber}</a>
+        <a className="page-link" href="" onClick={this.onClick} disabled={disabled} aria-label={ariaLabel}>{this.props.children}</a>
       </li>
     );
   }
