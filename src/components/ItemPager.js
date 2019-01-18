@@ -10,8 +10,8 @@ import React from 'react';
 */
 function ItemPager ({ pageSize, totalCount, pageNumber, changePage }) {
   const totalPages = Math.ceil(totalCount / pageSize);
-  if (totalPages < 2) {
-    // don't show pagination if only one page
+  if (!totalPages || totalPages < 2) {
+    // don't show pagination
     return null;
   }
 

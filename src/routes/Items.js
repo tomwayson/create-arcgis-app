@@ -6,20 +6,22 @@ import AgoSearch from '../components/AgoSearch';
 import ItemsTable from '../components/ItemsTable';
 import ItemPager from '../components/ItemPager';
 
-// parse search term from query string
+// parse search params out of query string w/ defaults
 function parseSearch(search) {
+  const defaults = {
+    num: 10,
+    start: 1
+  };
   // NOTE: URLSearchParams() only works in real browsers,
   // for IE support use https://www.npmjs.com/package/query-string 
   const params = search && new URLSearchParams(search);
   return params 
   ? {
-      num: params.get('num') || 10,
-      // NOTE: default q is set right before executing query,
-      // if set here, an empty search box appears to be out of sync
+      num: params.get('num') || defaults.num,
       q: params.get('q'),
-      start: params.get('start') || 1
+      start: params.get('start') || defaults.start
     }
-  : {};
+  : defaults;
 }
 
 function didSearchParamsChange(prevLocation, location) {
@@ -46,8 +48,8 @@ class Items extends React.Component {
       history,
       location 
     } = this.props;
-    const path = `${location.pathname}/items?q=${q}`;
-    history.push(path)
+    const path = `${location.pathname}?q=${q}`;
+    history.push(path);
   }
   changePage = (page) => {
     // calculate next start record based on the number of records per page
@@ -62,11 +64,13 @@ class Items extends React.Component {
     history.push(path);
   }
   doSearch() {
-    const { location } = this.props;
     // parse search params out of query string w/ defaults
+    const { location } = this.props;
     const searchForm = parseSearch(location.search);
     if (!searchForm.q) {
-      searchForm.q = '*';
+      // invalid search term, emulate an empty response rather than sending a request
+      this.setState({ results: [], total: 0 });
+      return Promise.resolve();
     }
     // execute search and update state
     return searchItems({
