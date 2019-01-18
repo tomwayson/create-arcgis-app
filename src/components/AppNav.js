@@ -7,13 +7,16 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Button
+  Button,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from 'reactstrap';
 
 class AppNav extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isOpen: false
     };
@@ -23,12 +26,12 @@ class AppNav extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
-  signIn = () => {
-    if (this.props.onSignIn) {
-      this.props.onSignIn();
-    }
-  }
   render() {
+    const {
+      currentUser,
+      onSignIn,
+      onSignOut
+    } = this.props;
     return (
       <Navbar color="dark" dark expand="md" fixed="top">
         <NavbarBrand href="#">Ambitious ArcGIS App</NavbarBrand>
@@ -43,14 +46,36 @@ class AppNav extends React.Component {
             </NavItem>
           </Nav>
           <Nav navbar className="ml-auto">
-            <NavItem>
-              <Button color="link" onClick={this.signIn} className="nav-link">Sign In</Button>
-            </NavItem>
+            <UserNav currentUser={currentUser} signIn={onSignIn} signOut={onSignOut} />
           </Nav>
         </Collapse>
       </Navbar>
     );
   }
+}
+
+function UserNav ({ currentUser, signIn, signOut }) {
+  if (!currentUser) {
+    // show sign in link
+    return (
+      <NavItem className="ml-auto">
+        <Button color="link" onClick={signIn} className="nav-link">Sign In</Button>
+      </NavItem>
+    );
+  }
+  // show user menu
+  return (
+    <UncontrolledDropdown nav inNavbar>
+      <DropdownToggle nav caret>
+        { currentUser.fullName }
+      </DropdownToggle>
+      <DropdownMenu right>
+        <DropdownItem onClick={signOut}>
+          Sign Out
+        </DropdownItem>
+      </DropdownMenu>
+    </UncontrolledDropdown>
+  );
 }
 
 export default AppNav;
