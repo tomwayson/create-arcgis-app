@@ -9,7 +9,7 @@ class AgoSearch extends React.Component {
   constructor(props) {
     super(props);
     // use a copy so that we don't immediately update bound URL parameters
-    this.state = { searchCopy: props.q };
+    this.state = { searchCopy: props.q || '' };
   }
   onChange = (e) => {
     // hold onto a copy of the search term
