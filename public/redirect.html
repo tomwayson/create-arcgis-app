@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- arcgis-rest-js script to complete user sign in -->
+  <!-- NOTE: this JS file is copied from node_modules by a package.json script -->
+  <script src="./auth.umd.min.js"></script>
+  <script>
+    function loadHandler() {
+      // get client id from url hash
+      const match = window.location.href.match(/&state=([^&]+)/);
+      const clientId = match && match[1];
+      // complete the oauth flow
+      session = arcgisRest.UserSession.completeOAuth2({
+        clientId: clientId,
+      });
+    }
+  </script>
+</head>
+<body onload="loadHandler();">
+</body>
+</html>

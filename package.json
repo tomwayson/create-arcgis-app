@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@esri/arcgis-rest-common-types": "^1.14.4",
-    "@esri/arcgis-rest-items": "^1.14.4",
-    "@esri/arcgis-rest-request": "^1.14.4",
+    "@esri/arcgis-rest-auth": "^1.15.2",
+    "@esri/arcgis-rest-common-types": "^1.15.2",
+    "@esri/arcgis-rest-items": "^1.15.2",
+    "@esri/arcgis-rest-request": "^1.15.2",
     "bootstrap": "^4.2.1",
     "node-sass": "^4.11.0",
     "react": "^16.7.0",
@@ -15,7 +16,10 @@
     "reactstrap": "^7.1.0"
   },
   "scripts": {
+    "copy:auth": "cp ./node_modules/@esri/arcgis-rest-auth/dist/umd/auth.umd.min.js ./public/auth.umd.min.js",
+    "prestart": "npm run copy:auth",
     "start": "react-scripts start",
+    "prebuild": "npm run copy:auth",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
