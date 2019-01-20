@@ -1,56 +1,27 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { UserSession } from '@esri/arcgis-rest-auth';
 import './App.scss';
+import { restoreSession, signIn, signOut } from './utils/session';
 import AppNav from './components/AppNav';
 import UserMenu from './components/UserMenu';
 import Home from './routes/Home';
 import Items from './routes/Items';
-
-function getSessionFromLocalStorage () {
-  const serializedSession = window && window.localStorage && window.localStorage.getItem('CAA_SESSION');
-  const session = serializedSession && UserSession.deserialize(serializedSession);
-  return session;
-}
-
-// save session & user for next time the user loads the app
-function saveSessionToLocalStorage (session) {
-  if (!session || !window || !window.localStorage) {
-    return;
-  }
-  window.localStorage.setItem('CAA_SESSION', session.serialize());
-}
-
-function removeSessionFromLocalStorage() {
-  if (!window || !window.localStorage) {
-    return;
-  }
-  window.localStorage.removeItem('CAA_SESSION');
-}
 
 class App extends React.Component {
   constructor(props) {
     super(props)
 
     // initialize app from previous session (if any)
-    const session = getSessionFromLocalStorage();
+    const session = restoreSession();
     this.state = {
       session
     };
   }
   signIn = () => {
-    // sign in
-    UserSession.beginOAuth2({
-      // TODO: get clientId from config
-      clientId: 'EICkmTOXkBhPwIRp',
-      popup: true,
-      redirectUri: `${window.location.origin}/redirect.html`
-    })
+    signIn()
     .then(session => {
       // make session available to the app
       this.setState({ session });
-      // save session for next time the user loads the app
-      saveSessionToLocalStorage(session);
       // get user info
       this.initUser(session);
     });
@@ -70,7 +41,7 @@ class App extends React.Component {
       currentUser: null
     });
     // make sure the user is not logged in the next time they load the app
-    removeSessionFromLocalStorage();
+    signOut();
   }
   componentDidMount () {
     const {
