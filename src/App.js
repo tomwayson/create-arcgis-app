@@ -9,21 +9,15 @@ import Items from './routes/Items';
 function getSessionFromLocalStorage () {
   const serializedSession = window && window.localStorage && window.localStorage.getItem('CAA_SESSION');
   const session = serializedSession && UserSession.deserialize(serializedSession);
-  const serializedUser = session && window.localStorage.getItem('CAA_USER');
-  const currentUser = serializedUser && JSON.parse(serializedUser);
-  return {
-    session,
-    currentUser
-  };
+  return session;
 }
 
 // save session & user for next time the user loads the app
-function saveSessionToLocalStorage (session, currentUser) {
-  if (!window || !window.localStorage) {
+function saveSessionToLocalStorage (session) {
+  if (!session || !window || !window.localStorage) {
     return;
   }
   window.localStorage.setItem('CAA_SESSION', session.serialize());
-  window.localStorage.setItem('CAA_USER', JSON.stringify(currentUser));
 }
 
 function removeSessionFromLocalStorage() {
@@ -31,7 +25,6 @@ function removeSessionFromLocalStorage() {
     return;
   }
   window.localStorage.removeItem('CAA_SESSION');
-  window.localStorage.removeItem('CAA_USER');
 }
 
 class App extends React.Component {
@@ -39,32 +32,35 @@ class App extends React.Component {
     super(props)
 
     // initialize app from previous session (if any)
-    const { session, currentUser } = getSessionFromLocalStorage();
+    const session = getSessionFromLocalStorage();
     this.state = {
-      session,
-      currentUser
+      session
     };
   }
   signIn = () => {
     // sign in
     UserSession.beginOAuth2({
+      // TODO: get clientId from config
       clientId: 'EICkmTOXkBhPwIRp',
       popup: true,
       redirectUri: `${window.location.origin}/redirect.html`
     })
-    .then(this.initSession);
+    .then(session => {
+      // make session available to the app
+      this.setState({ session });
+      // save session for next time the user loads the app
+      saveSessionToLocalStorage(session);
+      // get user info
+      this.initUser(session);
+    });
   }
-  initSession = (session) => {
-    // make session available to the app
-    this.setState({ session });    
+  initUser = (session) => {
     // fetch user info
-    return session.getUser()
+    session.getUser()
     .then(currentUser => {
       // make user available to the app
       this.setState({ currentUser });
-      // save session & user for next time the user loads the app
-      saveSessionToLocalStorage(session, currentUser);
-    });  
+    });
   }
   signOut = () => {
     // signal to app that the user has signed out
@@ -74,6 +70,15 @@ class App extends React.Component {
     });
     // make sure the user is not logged in the next time they load the app
     removeSessionFromLocalStorage();
+  }
+  componentDidMount () {
+    const {
+      session
+    } = this.state;
+    if (session) {
+      // we have a previously saved session, get the user info
+      this.initUser(session);
+    }
   }
   render () {
     const { currentUser } = this.state;
