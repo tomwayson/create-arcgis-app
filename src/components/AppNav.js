@@ -7,11 +7,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Button,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
 } from 'reactstrap';
 
 class AppNav extends React.Component {
@@ -28,9 +23,7 @@ class AppNav extends React.Component {
   }
   render() {
     const {
-      currentUser,
-      onSignIn,
-      onSignOut
+      userMenu
     } = this.props;
     return (
       <Navbar color="dark" dark expand="md" fixed="top">
@@ -46,36 +39,12 @@ class AppNav extends React.Component {
             </NavItem>
           </Nav>
           <Nav navbar className="ml-auto">
-            <UserNav currentUser={currentUser} signIn={onSignIn} signOut={onSignOut} />
+            {userMenu}
           </Nav>
         </Collapse>
       </Navbar>
     );
   }
-}
-
-function UserNav ({ currentUser, signIn, signOut }) {
-  if (!currentUser) {
-    // show sign in link
-    return (
-      <NavItem className="ml-auto">
-        <Button color="link" onClick={signIn} className="nav-link">Sign In</Button>
-      </NavItem>
-    );
-  }
-  // show user menu
-  return (
-    <UncontrolledDropdown nav inNavbar>
-      <DropdownToggle nav caret>
-        { currentUser.fullName }
-      </DropdownToggle>
-      <DropdownMenu right>
-        <DropdownItem onClick={signOut}>
-          Sign Out
-        </DropdownItem>
-      </DropdownMenu>
-    </UncontrolledDropdown>
-  );
 }
 
 export default AppNav;

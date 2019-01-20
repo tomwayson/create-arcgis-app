@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { UserSession } from '@esri/arcgis-rest-auth';
 import './App.scss';
 import AppNav from './components/AppNav';
+import UserMenu from './components/UserMenu';
 import Home from './routes/Home';
 import Items from './routes/Items';
 
@@ -82,9 +83,13 @@ class App extends React.Component {
   }
   render () {
     const { currentUser } = this.state;
+    // NOTE: we bind the user menu and render it here 
+    // and pass it to the nav menu in order to avoid prop drilling
+    // see: https://reactjs.org/docs/context.html#before-you-use-context
+    const userMenu =  (<UserMenu currentUser={currentUser} onSignIn={this.signIn} onSignOut={this.signOut} />);
     return (
       <>
-        <AppNav currentUser={currentUser} onSignIn={this.signIn} onSignOut={this.signOut} />
+        <AppNav userMenu={userMenu} />
         <div className="container mt-5">
           <Route exact path="/" component={Home} />
           <Route path="/items" component={Items} />
