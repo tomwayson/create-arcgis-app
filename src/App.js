@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import './App.scss';
-import { restoreSession, signIn, signOut } from './utils/session';
+import { signIn, signOut } from './utils/session';
 import AppNav from './components/AppNav';
 import UserMenu from './components/UserMenu';
 import Home from './routes/Home';
@@ -10,11 +10,17 @@ import Items from './routes/Items';
 class App extends React.Component {
   constructor(props) {
     super(props)
-
-    // initialize app from previous session (if any)
-    const session = restoreSession();
+    // NOTE: I'm a bit wary of using props/state for session
+    // since it is an instance of a class, but:
+    // - I haven't found anyone explicitly saying it's an anti-pattern 
+    //   to use props/state for a class instance
+    // - React docs encourage passing components via props
+    // - some session props (trustedServers) will be lost if we instead
+    //   pass around and re-hydrate a serialized or JSON session
+    // - it works, so ¯\_(ツ)_/¯
+    // initialize state from previous session (if any)
     this.state = {
-      session
+      session: props.previousSession
     };
   }
   signIn = () => {
