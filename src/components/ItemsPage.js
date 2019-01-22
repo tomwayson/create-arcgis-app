@@ -1,5 +1,6 @@
 import React from 'react';
 import AgoSearch from './AgoSearch';
+import ExtentsMap from './ExtentsMap';
 import ItemsTable from './ItemsTable';
 import ItemPager from './ItemPager';
 import './ItemsPage.scss';
@@ -44,7 +45,7 @@ class ItemsPage extends React.Component {
         </div>
         <div className="row">
           <div className="col-12">
-            {/* TODO: extents map component */}
+            <ExtentsMap items={results} />
             <ItemsTable items={results} />
             <ItemPager pageSize={num} totalCount={total} pageNumber={pageNumber} changePage={this.changePage} />
           </div>

@@ -1,17 +1,20 @@
 import { UserSession } from '@esri/arcgis-rest-auth';
+import env from '../config/environment';
 import * as Cookies from 'js-cookie';
 
-// TODO: should we get these from from config?
-const SESSION_COOKIE_NAME = 'caa_session';
-const CLIENT_ID = 'EICkmTOXkBhPwIRp';
-// TODO: portal URL?
+const SESSION_COOKIE_NAME = `${env.cookiePrefix}_session`;
 
 /**
  * sign in using OAuth pop up
  */
 export function signIn () {
+  const { 
+    clientId,
+    portal
+  } = env;
   return UserSession.beginOAuth2({
-    clientId: CLIENT_ID,
+    clientId,
+    portal,
     popup: true,
     redirectUri: `${window.location.origin}/redirect.html`
   })
