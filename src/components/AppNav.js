@@ -7,13 +7,11 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  Button
 } from 'reactstrap';
 
 class AppNav extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isOpen: false
     };
@@ -23,12 +21,10 @@ class AppNav extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
-  signIn = () => {
-    if (this.props.onSignIn) {
-      this.props.onSignIn();
-    }
-  }
   render() {
+    const {
+      userMenu
+    } = this.props;
     return (
       <Navbar color="dark" dark expand="md" fixed="top">
         <NavbarBrand href="#">Ambitious ArcGIS App</NavbarBrand>
@@ -43,9 +39,7 @@ class AppNav extends React.Component {
             </NavItem>
           </Nav>
           <Nav navbar className="ml-auto">
-            <NavItem>
-              <Button color="link" onClick={this.signIn} className="nav-link">Sign In</Button>
-            </NavItem>
+            {userMenu}
           </Nav>
         </Collapse>
       </Navbar>

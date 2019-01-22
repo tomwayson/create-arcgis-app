@@ -18,6 +18,11 @@
 .env.test.local
 .env.production.local
 
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# app
+# this is copied from node_modules by a script
+public/auth.umd.min.js

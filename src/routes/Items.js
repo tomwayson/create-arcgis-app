@@ -52,8 +52,9 @@ class Items extends React.Component {
     history.push(path);
   }
   doSearch() {
+    // get the query string and session from props
+    const { location, session: authentication } = this.props;
     // parse search params out of query string w/ defaults
-    const { location } = this.props;
     const searchForm = parseSearch(location.search);
     if (!searchForm.q) {
       // invalid search term, emulate an empty response rather than sending a request
@@ -62,12 +63,21 @@ class Items extends React.Component {
     }
     // execute search and update state
     return searchItems({
-      searchForm
+      searchForm,
+      authentication
     })
     .then(({ results, total }) => {
-      this.setState({ results, total });
+      this.setState({
+        error: null,
+        results, 
+        total
+      });
     }).catch(e => {
-      this.setState({ error: e.message || e })
+      this.setState({
+        error: e.message || e,
+        results: null,
+        total: 0
+      })
     });
   }
   // react lifecyle methods
@@ -76,8 +86,14 @@ class Items extends React.Component {
     this.doSearch();
   }
   componentDidUpdate (prevProps) {
-    if (didSearchParamsChange(prevProps.location, this.props.location)) {
-      // re-exectute the search based on the new query params
+    const {
+      location,
+      session
+    } = this.props;
+    const paramsUpdated = didSearchParamsChange(prevProps.location, location);
+    const sessionUpdated = prevProps.session !== session;
+    if (paramsUpdated || sessionUpdated) {
+      // re-exectute the search based on the new query params or log in status
       this.doSearch();
     }
   }
