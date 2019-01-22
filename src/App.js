@@ -53,17 +53,24 @@ class App extends React.Component {
     }
   }
   render () {
-    const { currentUser } = this.state;
+    const { currentUser, session } = this.state;
     // NOTE: we bind the user menu and render it here 
     // and pass it to the nav menu in order to avoid prop drilling
     // see: https://reactjs.org/docs/context.html#before-you-use-context
-    const userMenu =  (<UserMenu currentUser={currentUser} onSignIn={this.signIn} onSignOut={this.signOut} />);
+    const userMenu = (<UserMenu currentUser={currentUser} onSignIn={this.signIn} onSignOut={this.signOut} />);
     return (
       <>
         <AppNav userMenu={userMenu} />
         <div className="container mt-5">
           <Route exact path="/" component={Home} />
-          <Route path="/items" component={Items} />
+          {/* 
+            NOTE: we use render instead of component here so that we can pass in the session
+            to the items route in addition to the other props passed in by react-router 
+            see: https://reacttraining.com/react-router/web/api/Route/render-func
+          */}
+          <Route path="/items" render={props => (
+            <Items { ...props } session={session} />
+          )} />
         </div>
       </>
     );  
