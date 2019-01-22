@@ -1,0 +1,7 @@
+.extents-map {
+  height: 300px;
+}
+// NOTE: have to override esri styles since they are lazy loaded after this
+.extents-map.esri-view {
+  margin-bottom: 20px;
+}
