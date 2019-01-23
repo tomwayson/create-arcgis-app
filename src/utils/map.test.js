@@ -1,4 +1,5 @@
 import { coordsToExtent } from './map';
+
 describe ('utils', function () {
   describe ('map', function () {
     describe ('coordsToExtent', function () {
