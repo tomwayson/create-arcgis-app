@@ -14,7 +14,6 @@ class App extends React.Component {
     // since it is an instance of a class, but:
     // - I haven't found anyone explicitly saying it's an anti-pattern 
     //   to use props/state for a class instance
-    // - React docs encourage passing components via props
     // - some session props (trustedServers) will be lost if we instead
     //   pass around and re-hydrate a serialized or JSON session
     // - it works, so ¯\_(ツ)_/¯
