@@ -49,7 +49,7 @@ class ExtentsMap extends React.Component {
   }
   render () {
     return (
-      <div className="extents-map" ref={this.mapNode}></div>
+      <div className="extents-map" data-testid="map" ref={this.mapNode}></div>
     );
   }
 }

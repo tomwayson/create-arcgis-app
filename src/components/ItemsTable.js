@@ -12,7 +12,7 @@ function ItemsTable ({ items }) {
       </thead>
       <tbody>
         {
-          items.map(item => {
+          items && items.map(item => {
             return (
               <tr key={item.id}>
                 <td>{item.title}</td>

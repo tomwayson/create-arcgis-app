@@ -32,7 +32,9 @@ export function signOut ()  {
   deleteSession();
 }
 
-// restore a previously saved session
+/**
+ * restore a previously saved session
+ */
 export function restoreSession () {
   const serializedSession = Cookies.get(SESSION_COOKIE_NAME);
   const session = serializedSession && UserSession.deserialize(serializedSession);
