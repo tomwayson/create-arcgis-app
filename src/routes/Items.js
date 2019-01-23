@@ -1,31 +1,8 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 import { searchItems } from '@esri/arcgis-rest-items';
+import { parseSearch, didSearchParamsChange } from '../utils/search';
 import ItemsPage from '../components/ItemsPage';
-
-// parse search params out of query string w/ defaults
-function parseSearch(search) {
-  const defaults = {
-    num: 10,
-    start: 1
-  };
-  // NOTE: URLSearchParams() only works in real browsers,
-  // for IE support use https://www.npmjs.com/package/query-string 
-  const params = search && new URLSearchParams(search);
-  return params 
-  ? {
-      num: params.get('num') || defaults.num,
-      q: params.get('q'),
-      start: params.get('start') || defaults.start
-    }
-  : defaults;
-}
-
-function didSearchParamsChange(prevLocation, location) {
-  const prevSearch = prevLocation && prevLocation.search;
-  const search = location && location.search;
-  return search !== prevSearch;
-}
 
 class Items extends React.Component {
   constructor(props) {
