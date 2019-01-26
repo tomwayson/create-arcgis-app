@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   NavItem,
   Button,
@@ -8,12 +8,14 @@ import {
   DropdownItem
 } from 'reactstrap';
 
-function UserMenu ({ currentUser, onSignIn, onSignOut }) {
+function UserMenu({ currentUser, onSignIn, onSignOut }) {
   if (!currentUser) {
     // show sign in link
     return (
       <NavItem className="ml-auto">
-        <Button color="link" onClick={onSignIn} className="nav-link">Sign In</Button>
+        <Button color="link" onClick={onSignIn} className="nav-link">
+          Sign In
+        </Button>
       </NavItem>
     );
   }
@@ -21,12 +23,10 @@ function UserMenu ({ currentUser, onSignIn, onSignOut }) {
   return (
     <UncontrolledDropdown nav inNavbar>
       <DropdownToggle nav caret>
-        { currentUser.fullName }
+        {currentUser.fullName}
       </DropdownToggle>
       <DropdownMenu right>
-        <DropdownItem onClick={onSignOut}>
-          Sign Out
-        </DropdownItem>
+        <DropdownItem onClick={onSignOut}>Sign Out</DropdownItem>
       </DropdownMenu>
     </UncontrolledDropdown>
   );

@@ -5,4 +5,4 @@ export default {
   portal: 'https://www.arcgis.com/sharing/rest',
   // app cookies will be prefixed with this, ex: caa_session
   cookiePrefix: 'caa'
-}
+};

@@ -18,16 +18,13 @@ class Items extends React.Component {
     // submits the inline search form or links to a new page
     // NOTE: `location` and `history` are passed in by react-router
     // see: https://tylermcginnis.com/react-router-programmatically-navigate/
-    const {
-      history,
-      location 
-    } = this.props;
+    const { history, location } = this.props;
     let path = `${location.pathname}?q=${q}`;
     if (start) {
       path = `${path}&start=${start}`;
     }
     history.push(path);
-  }
+  };
   doSearch() {
     // get the query string and session from props
     const { location, session: authentication } = this.props;
@@ -43,30 +40,28 @@ class Items extends React.Component {
       searchForm,
       authentication
     })
-    .then(({ results, total }) => {
-      this.setState({
-        error: null,
-        results, 
-        total
-      });
-    }).catch(e => {
-      this.setState({
-        error: e.message || e,
-        results: null,
-        total: 0
+      .then(({ results, total }) => {
+        this.setState({
+          error: null,
+          results,
+          total
+        });
       })
-    });
+      .catch(e => {
+        this.setState({
+          error: e.message || e,
+          results: null,
+          total: 0
+        });
+      });
   }
   // react lifecyle methods
-  componentDidMount () {
+  componentDidMount() {
     // execute the search when this route first loads
     this.doSearch();
   }
-  componentDidUpdate (prevProps) {
-    const {
-      location,
-      session
-    } = this.props;
+  componentDidUpdate(prevProps) {
+    const { location, session } = this.props;
     const paramsUpdated = didSearchParamsChange(prevProps.location, location);
     const sessionUpdated = prevProps.session !== session;
     if (paramsUpdated || sessionUpdated) {
@@ -74,12 +69,8 @@ class Items extends React.Component {
       this.doSearch();
     }
   }
-  render () {
-    const {
-      error,
-      results,
-      total
-    } = this.state;
+  render() {
+    const { error, results, total } = this.state;
     if (error) {
       return <Alert color="danger">{error}</Alert>;
     }
@@ -92,7 +83,14 @@ class Items extends React.Component {
     const { num, q, start } = parseSearch(location.search);
     // render the items page
     return (
-      <ItemsPage results={results} total={total} num={num} q={q} start={start} onParamsChange={this.onParamsChange} />
+      <ItemsPage
+        results={results}
+        total={total}
+        num={num}
+        q={q}
+        start={start}
+        onParamsChange={this.onParamsChange}
+      />
     );
   }
 }
