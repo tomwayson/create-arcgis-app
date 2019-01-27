@@ -16,7 +16,6 @@
     "reactstrap": "^7.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.12.1",
     "eslint-config-prettier": "^4.0.0",
     "eslint-config-react-app": "^3.0.6",
     "eslint-plugin-flowtype": "^3.2.1",
@@ -40,9 +39,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",

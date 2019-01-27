@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+**NOTE**: in order to see linting rules in your editor, you will need to install eslint globally (i.e. `npm i -g eslint`).
+
 ## Available Scripts
 
 In the project directory, you can run:
