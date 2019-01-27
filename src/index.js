@@ -17,7 +17,12 @@ import * as serviceWorker from './serviceWorker';
 // read the user's previous session (if any) from a cookie
 const previousSession = restoreSession();
 
-ReactDOM.render(<Router><App previousSession={previousSession} /></Router>, document.getElementById('root'));
+ReactDOM.render(
+  <Router>
+    <App previousSession={previousSession} />
+  </Router>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

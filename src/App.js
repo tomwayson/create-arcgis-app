@@ -9,10 +9,10 @@ import Items from './routes/Items';
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     // NOTE: I'm a bit wary of using props/state for session
     // since it is an instance of a class, but:
-    // - I haven't found anyone explicitly saying it's an anti-pattern 
+    // - I haven't found anyone explicitly saying it's an anti-pattern
     //   to use props/state for a class instance
     // - some session props (trustedServers) will be lost if we instead
     //   pass around and re-hydrate a serialized or JSON session
@@ -23,22 +23,20 @@ class App extends React.Component {
     };
   }
   signIn = () => {
-    signIn()
-    .then(session => {
+    signIn().then(session => {
       // make session available to the app
       this.setState({ session });
       // get user info
       this.initUser(session);
     });
-  }
-  initUser = (session) => {
+  };
+  initUser = session => {
     // fetch user info
-    session.getUser()
-    .then(currentUser => {
+    session.getUser().then(currentUser => {
       // make user available to the app
       this.setState({ currentUser });
     });
-  }
+  };
   signOut = () => {
     // signal to app that the user has signed out
     this.setState({
@@ -47,22 +45,26 @@ class App extends React.Component {
     });
     // make sure the user is not logged in the next time they load the app
     signOut();
-  }
-  componentDidMount () {
-    const {
-      session
-    } = this.state;
+  };
+  componentDidMount() {
+    const { session } = this.state;
     if (session) {
       // we have a previously saved session, get the user info
       this.initUser(session);
     }
   }
-  render () {
+  render() {
     const { currentUser, session } = this.state;
-    // NOTE: we bind the user menu and render it here 
+    // NOTE: we bind the user menu and render it here
     // and pass it to the nav menu in order to avoid prop drilling
     // see: https://reactjs.org/docs/context.html#before-you-use-context
-    const userMenu = (<UserMenu currentUser={currentUser} onSignIn={this.signIn} onSignOut={this.signOut} />);
+    const userMenu = (
+      <UserMenu
+        currentUser={currentUser}
+        onSignIn={this.signIn}
+        onSignOut={this.signOut}
+      />
+    );
     return (
       <>
         <AppNav userMenu={userMenu} />
@@ -73,12 +75,13 @@ class App extends React.Component {
             to the items route in addition to the other props passed in by react-router 
             see: https://reacttraining.com/react-router/web/api/Route/render-func
           */}
-          <Route path="/items" render={props => (
-            <Items { ...props } session={session} />
-          )} />
+          <Route
+            path="/items"
+            render={props => <Items {...props} session={session} />}
+          />
         </div>
       </>
-    );  
+    );
   }
 }
 

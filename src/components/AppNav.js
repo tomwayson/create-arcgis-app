@@ -1,12 +1,12 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
+  NavItem
 } from 'reactstrap';
 
 class AppNav extends React.Component {
@@ -20,11 +20,9 @@ class AppNav extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }
+  };
   render() {
-    const {
-      userMenu
-    } = this.props;
+    const { userMenu } = this.props;
     return (
       <Navbar color="dark" dark expand="md" fixed="top">
         <NavbarBrand href="#">Ambitious ArcGIS App</NavbarBrand>
@@ -32,10 +30,14 @@ class AppNav extends React.Component {
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink className="nav-link" exact to="/">Home</NavLink>
+              <NavLink className="nav-link" exact to="/">
+                Home
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink  className="nav-link" to="/items">Items</NavLink>
+              <NavLink className="nav-link" to="/items">
+                Items
+              </NavLink>
             </NavItem>
           </Nav>
           <Nav navbar className="ml-auto">
