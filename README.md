@@ -1,8 +1,12 @@
 # Create ArcGIS App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An example of how to use the ArcGIS platform in an application created with crete-react-app.
 
-**NOTE**: in order to see linting rules in your editor, you will need to install eslint globally (i.e. `npm i -g eslint`).
+The application uses [arcgis-rest-js](https://esri.github.io/arcgis-rest-js/) to authenticate users and search for items and the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) to show the extents of those items on a map.
+
+This is a React port of https://github.com/mjuniper/ambitious-arcgis-app-2018/, see that repository for more information on the motivation behind this application.
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -15,6 +19,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+**NOTE**: in order to see linting rules in your editor, you will need to install eslint globally (i.e. `npm i -g eslint`).
 
 ### `yarn test`
 
@@ -29,7 +35,11 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `yarn run deploy`
+
+Deploy the built application to https://surge.sh/. You will need to update this script in package.json to point to your own surge domain.
+
+See the section about [deploying to surge](https://facebook.github.io/create-react-app/docs/deployment#surge-https-surgesh) for more information.
 
 ### `yarn run eject`
 

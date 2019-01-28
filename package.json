@@ -2,6 +2,7 @@
   "name": "create-arcgis-app",
   "version": "0.1.0",
   "private": true,
+  "description": "An example of how to use the ArcGIS platform in an application created with crete-react-app.",
   "dependencies": {
     "@esri/arcgis-rest-auth": "^1.15.2",
     "@esri/arcgis-rest-common-types": "^1.15.2",
@@ -37,6 +38,8 @@
     "start": "react-scripts start",
     "prebuild": "npm run copy:auth",
     "build": "react-scripts build",
+    "predeploy": "yarn run build && mv build/index.html build/200.html",
+    "deploy": "surge ./build create-arcgis-app.surge.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
