@@ -1,0 +1,25 @@
+/* import esri styles */
+/* TODO: these should be lazy loaed by esri-loader's loadModules() */
+@import url('https://js.arcgis.com/4.10/esri/css/main.css');
+
+/* global styles */
+body {
+  padding-top: 3.5rem;
+}
+
+/* index */
+.jumbotron {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url(/images/Banner9.jpg) center top/cover no-repeat;
+}
+
+/* items */
+.search-form-inline {
+  margin-top: 5px;
+}
+
+/* map */
+.extents-map {
+  height: 300px;
+  margin-bottom: 20px;
+}

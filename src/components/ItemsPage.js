@@ -3,7 +3,6 @@ import AgoSearch from './AgoSearch';
 import ExtentsMap from './ExtentsMap';
 import ItemsTable from './ItemsTable';
 import ItemPager from './ItemPager';
-import './ItemsPage.scss';
 
 class ItemsPage extends React.Component {
   onSearch = q => {

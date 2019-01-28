@@ -38,7 +38,7 @@
     "start": "react-scripts start",
     "prebuild": "npm run copy:auth",
     "build": "react-scripts build",
-    "predeploy": "yarn run build && mv build/index.html build/200.html",
+    "predeploy": "npm run build && mv build/index.html build/200.html",
     "deploy": "surge ./build create-arcgis-app.surge.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -1,5 +1,4 @@
 import React from 'react';
-import './ExtentsMap.scss';
 import config from '../config/map';
 import { newMap, coordsToExtent } from '../utils/map';
 

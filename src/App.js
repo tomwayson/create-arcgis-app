@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import './App.scss';
+import './App.css';
 import { signIn, signOut } from './utils/session';
 import AppNav from './components/AppNav';
 import UserMenu from './components/UserMenu';
