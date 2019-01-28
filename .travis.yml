@@ -6,4 +6,3 @@ cache:
     - node_modules
 script:
   - yarn test
-  - yarn run build
