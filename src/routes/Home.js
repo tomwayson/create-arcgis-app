@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import './Home.scss';
 import AgoSearch from '../components/AgoSearch';
 
 class Home extends React.Component {
