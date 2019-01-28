@@ -1,7 +1,3 @@
-/* import esri styles */
-/* TODO: these should be lazy loaed by esri-loader's loadModules() */
-@import url('https://js.arcgis.com/4.10/esri/css/main.css');
-
 /* global styles */
 body {
   padding-top: 3.5rem;
