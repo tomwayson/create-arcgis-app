@@ -17,9 +17,10 @@ export function coordsToExtent(coords) {
 }
 
 export function newMap(element, mapOptions) {
-  // lazy-load the map modules and CSS
+  // lazy-load the map modules
   return loadModules(['esri/Map', 'esri/views/MapView', 'esri/Graphic'], {
-    css: 'https://js.arcgis.com/4.10/esri/css/main.css'
+    // TODO: also lazy-load the CSS
+    // css: 'https://js.arcgis.com/4.10/esri/css/main.css'
   }).then(([Map, MapView, Graphic]) => {
     // show the map at the element
     const map = new Map(mapOptions);
