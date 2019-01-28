@@ -1,3 +1,11 @@
+// NOTE: this file serves as the client application's entry point
+// this is a good place to do any work that would be
+// done differently on the server (for server-rendered apps)
+// Examples:
+// - select the router component to render
+// - read data (i.e. session) from cookies or local storage
+// - detect the user's locale
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -6,18 +14,9 @@ import App from './App';
 import { restoreSession } from './utils/session';
 import * as serviceWorker from './serviceWorker';
 
-// this file serves as the client application's entry point
-
-// NOTE: this is a good place to do any work that would be
-// done differently on the server (for server-rendered apps)
-// Examples:
-// - select the router component to render
-// - read data (i.e. session) from cookies or local storage
-// - detect the user's locale
-
 // read the user's previous session (if any) from a cookie
+// and pass that into the application
 const previousSession = restoreSession();
-
 ReactDOM.render(
   <Router>
     <App previousSession={previousSession} />
