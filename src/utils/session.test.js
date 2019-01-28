@@ -16,7 +16,7 @@ describe('utils', function() {
           Cookies.get.mockReturnValueOnce(undefined);
           restoreSession();
           expect(Cookies.get.mock.calls.length).toBe(1);
-          expect(Cookies.get.mock.calls[0][0]).toBe('caa_session');
+          expect(Cookies.get.mock.calls[0][0]).toBe('caa_test_session');
           expect(UserSession.deserialize.mock.calls.length).toBe(0);
         });
       });
@@ -25,7 +25,7 @@ describe('utils', function() {
           Cookies.get.mockReturnValueOnce('notarealsession');
           restoreSession();
           expect(Cookies.get.mock.calls.length).toBe(1);
-          expect(Cookies.get.mock.calls[0][0]).toBe('caa_session');
+          expect(Cookies.get.mock.calls[0][0]).toBe('caa_test_session');
           expect(UserSession.deserialize.mock.calls.length).toBe(1);
           expect(UserSession.deserialize.mock.calls[0][0]).toBe(
             'notarealsession'
@@ -41,7 +41,7 @@ describe('utils', function() {
         return signIn().then(result => {
           expect(Cookies.set.mock.calls.length).toBe(1);
           expect(Cookies.set.mock.calls[0]).toEqual([
-            'caa_session',
+            'caa_test_session',
             'notarealsession',
             { expires: tokenExpires }
           ]);
@@ -52,7 +52,7 @@ describe('utils', function() {
       it('deletes the cookie', function() {
         signOut();
         expect(Cookies.remove.mock.calls.length).toBe(1);
-        expect(Cookies.remove.mock.calls[0][0]).toBe('caa_session');
+        expect(Cookies.remove.mock.calls[0][0]).toBe('caa_test_session');
       });
     });
   });
