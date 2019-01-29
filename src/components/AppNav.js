@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   Collapse,
@@ -9,44 +9,34 @@ import {
   NavItem
 } from 'reactstrap';
 
-class AppNav extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false
-    };
+function AppNav({ title, userMenu }) {
+  const [isOpen, setIsOpen] = useState(false);
+  function toggle() {
+    setIsOpen(!isOpen);
   }
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
-  render() {
-    const { title, userMenu } = this.props;
-    return (
-      <Navbar color="dark" dark expand="md" fixed="top">
-        <NavbarBrand href="#">{title}</NavbarBrand>
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav navbar>
-            <NavItem>
-              <NavLink className="nav-link" exact to="/">
-                Home
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="nav-link" to="/items">
-                Items
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <Nav navbar className="ml-auto">
-            {userMenu}
-          </Nav>
-        </Collapse>
-      </Navbar>
-    );
-  }
+  return (
+    <Navbar color="dark" dark expand="md" fixed="top">
+      <NavbarBrand href="#">{title}</NavbarBrand>
+      <NavbarToggler onClick={toggle} />
+      <Collapse isOpen={isOpen} navbar>
+        <Nav navbar>
+          <NavItem>
+            <NavLink className="nav-link" exact to="/">
+              Home
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="nav-link" to="/items">
+              Items
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <Nav navbar className="ml-auto">
+          {userMenu}
+        </Nav>
+      </Collapse>
+    </Navbar>
+  );
 }
 
 export default AppNav;
