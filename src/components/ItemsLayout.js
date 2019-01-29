@@ -1,10 +1,10 @@
 import React from 'react';
+import { ItemPager } from 'react-arcgis-hub';
 import AgoSearch from './AgoSearch';
 import ExtentsMap from './ExtentsMap';
 import ItemsTable from './ItemsTable';
-import ItemPager from './ItemPager';
 
-class ItemsPage extends React.Component {
+class ItemsLayout extends React.Component {
   onSearch = q => {
     const { onParamsChange } = this.props;
     if (onParamsChange) {
@@ -58,4 +58,4 @@ class ItemsPage extends React.Component {
   }
 }
 
-export default ItemsPage;
+export default ItemsLayout;

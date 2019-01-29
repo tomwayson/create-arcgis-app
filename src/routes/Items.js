@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'reactstrap';
 import { searchItems } from '@esri/arcgis-rest-items';
 import { parseSearch, didSearchParamsChange } from '../utils/search';
-import ItemsPage from '../components/ItemsPage';
+import ItemsLayout from '../components/ItemsLayout';
 
 class Items extends React.Component {
   constructor(props) {
@@ -83,7 +83,7 @@ class Items extends React.Component {
     const { num, q, start } = parseSearch(location.search);
     // render the items page
     return (
-      <ItemsPage
+      <ItemsLayout
         results={results}
         total={total}
         num={num}
