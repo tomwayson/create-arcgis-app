@@ -1,10 +1,5 @@
 import React from 'react';
 
-function inputGroupClass(size) {
-  const sizeClass = size ? `input-group-${size}` : '';
-  return `input-group ${sizeClass}`.trim();
-}
-
 class AgoSearch extends React.Component {
   constructor(props) {
     super(props);
@@ -18,15 +13,19 @@ class AgoSearch extends React.Component {
   onSearch = e => {
     // don't actually submit the form
     e.preventDefault();
-    if (this.props.onSearch) {
+    const { onSearch } = this.props;
+    if (onSearch) {
       // call search function that was passed in as a prop
-      this.props.onSearch(this.state.searchCopy);
+      onSearch(this.state.searchCopy);
     }
   };
   render() {
+    const { size, className } = this.props;
+    const formClassName = `search-form ${className}`;
+    const inputGroupClass = `input-group ${size && `input-group-${size}`}`;
     return (
-      <form className="search-form" onSubmit={this.onSearch}>
-        <div className={inputGroupClass(this.props.size)}>
+      <form className={formClassName} onSubmit={this.onSearch}>
+        <div className={inputGroupClass}>
           <input
             className="form-control"
             placeholder="search for items"
