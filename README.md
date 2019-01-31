@@ -1,12 +1,18 @@
 # Create ArcGIS App
 
-An example of how to use the ArcGIS platform in an application created with crete-react-app.
+An example of how to use the ArcGIS platform in an application built with [create-react-app].
 
-The application uses [arcgis-rest-js](https://esri.github.io/arcgis-rest-js/) to authenticate users and search for items and the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) to show the extents of those items on a map.
+![App screenshot](./screenshot.png)
 
-This is a React port of https://github.com/mjuniper/ambitious-arcgis-app-2018/, see that repository for more information on the motivation behind this application.
+[View it live!](https://create-arcgis-app.surge.sh/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This application uses [arcgis-rest-js](https://esri.github.io/arcgis-rest-js/) to authenticate users and search for items and the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) (via [esri-loader]) to show the extents of those items on a map.
+
+This is a [React] port of [ambitious-arcgis-app-2018](https://github.com/mjuniper/ambitious-arcgis-app-2018/). See that repository for more information on the motivation behind this application.
+
+See [next-arcgis-app](https://github.com/tomwayson/next-arcgis-app) for a port of the same application built with [Next.js](https://nextjs.org/) instead of create-react-app.
+
+See below for instructions on how to run and modify this application locally after cloning the repository.
 
 ## Available Scripts
 
@@ -80,3 +86,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+[create-react-app]: https://facebook.github.io/create-react-app/
+[arcgis]: https://www.arcgis.com/
+[esri-loader]: https://github.com/Esri/esri-loader
+[react]: https://reactjs.org/
