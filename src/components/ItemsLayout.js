@@ -25,7 +25,7 @@ function ItemsLayout({ results, total, num, q, start, onParamsChange }) {
       <div className="row mb-2">
         <div className="col-9">
           <h2>
-            Your search for "{q}" yielded {total} items
+            Your search for &quot;{q}&quot; yielded {total} items
           </h2>
         </div>
         <div className="col-3">

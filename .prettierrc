@@ -1,7 +1,3 @@
 {
-  "extends": [
-    "plugin:prettier/recommended",
-    "prettier/react"
-  ],
   "singleQuote": true
 }
