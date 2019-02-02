@@ -11,6 +11,7 @@ class Home extends React.Component {
     this.setState({ searchTerm });
   };
   render() {
+    const { title } = this.props;
     const { searchTerm } = this.state;
     if (searchTerm) {
       // pass the search term to the items page
@@ -27,9 +28,7 @@ class Home extends React.Component {
     // otherwise render the search form
     return (
       <div className="jumbotron">
-        <h1 className="display-3 text-light text-center mb-5">
-          Ambitious ArcGIS App
-        </h1>
+        <h1 className="display-3 text-light text-center mb-5">{title}</h1>
         <AgoSearch q="" onSearch={this.onSearch} size="lg" />
       </div>
     );

@@ -54,6 +54,7 @@ class App extends React.Component {
     }
   }
   render() {
+    const { title } = this.props;
     const { currentUser, session } = this.state;
     // NOTE: we bind the user menu and render it here
     // and pass it to the nav menu in order to avoid prop drilling
@@ -67,14 +68,18 @@ class App extends React.Component {
     );
     return (
       <>
-        <AppNav userMenu={userMenu} />
+        <AppNav title={title} userMenu={userMenu} />
         <div className="container mt-5">
-          <Route exact path="/" component={Home} />
           {/* 
             NOTE: we use render instead of component here so that we can pass in the session
             to the items route in addition to the other props passed in by react-router 
             see: https://reacttraining.com/react-router/web/api/Route/render-func
           */}
+          <Route
+            exact
+            path="/"
+            render={props => <Home {...props} title={title} />}
+          />
           <Route
             path="/items"
             render={props => <Items {...props} session={session} />}

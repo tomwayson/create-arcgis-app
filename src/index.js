@@ -17,9 +17,11 @@ import * as serviceWorker from './serviceWorker';
 // read the user's previous session (if any) from a cookie
 // and pass that into the application
 const previousSession = restoreSession();
+// NOTE: this is set in public/index.html
+const title = document.title;
 ReactDOM.render(
   <Router>
-    <App previousSession={previousSession} />
+    <App previousSession={previousSession} title={title} />
   </Router>,
   document.getElementById('root')
 );
