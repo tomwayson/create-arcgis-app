@@ -14,5 +14,13 @@ describe('smoke tests', function() {
       expect(getByText('Ambitious ArcGIS App')).toBeInTheDocument();
       expect(getByText('Sign In')).toBeInTheDocument();
     });
+    it('matches snapshot', () => {
+      const { asFragment } = render(
+        <Router>
+          <App />
+        </Router>
+      );
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 });

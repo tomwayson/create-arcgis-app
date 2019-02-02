@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke tests w/o a previous session matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    class="navbar navbar-expand-md navbar-dark bg-dark fixed-top"
+  >
+    <a
+      class="navbar-brand"
+      href="#"
+    >
+      Ambitious ArcGIS App
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+    >
+      <span
+        class="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      class="collapse navbar-collapse"
+    >
+      <ul
+        class="navbar-nav"
+      >
+        <li
+          class="nav-item"
+        >
+          <a
+            aria-current="page"
+            class="nav-link active"
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li
+          class="nav-item"
+        >
+          <a
+            class="nav-link"
+            href="/items"
+          >
+            Items
+          </a>
+        </li>
+      </ul>
+      <ul
+        class="ml-auto navbar-nav"
+      >
+        <li
+          class="ml-auto nav-item"
+        >
+          <button
+            class="nav-link btn btn-link"
+            type="button"
+          >
+            Sign In
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div
+    class="container mt-5"
+  >
+    <div
+      class="jumbotron"
+    >
+      <h1
+        class="display-3 text-light text-center mb-5"
+      >
+        Ambitious ArcGIS App
+      </h1>
+      <form
+        class="search-form undefined"
+      >
+        <div
+          class="input-group input-group-lg"
+        >
+          <input
+            class="form-control"
+            placeholder="search for items"
+            value=""
+          />
+          <div
+            class="input-group-append"
+          >
+            <button
+              class="btn btn-secondary"
+              type="submit"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;
