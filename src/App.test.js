@@ -15,25 +15,4 @@ describe('smoke tests', function() {
       expect(getByText('Sign In')).toBeInTheDocument();
     });
   });
-  describe('w/ a previous session', function() {
-    it('renders app title and sign in button', () => {
-      // mock previous session
-      const previousSession = {
-        getUser: () => {
-          return Promise.resolve({
-            fullName: 'Tom Wayson'
-          });
-        }
-      };
-      const { queryByText } = render(
-        <Router>
-          <App previousSession={previousSession} />
-        </Router>
-      );
-      expect(queryByText('Sign In')).toBeTruthy();
-      return wait(() => expect(queryByText('Sign In')).toBeNull()).then(() => {
-        expect(queryByText('Tom Wayson')).toBeTruthy();
-      });
-    });
-  });
 });

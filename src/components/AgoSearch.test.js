@@ -12,7 +12,7 @@ describe('components', function() {
       const { getByPlaceholderText, getByText } = render(
         <AgoSearch q={q} onSearch={onSearch} size="sm" />
       );
-      // inital dom state
+      // initial dom state
       const input = getByPlaceholderText('search for items');
       expect(input.value).toBe(q);
       let newQ = 'new q';
