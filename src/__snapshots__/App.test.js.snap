@@ -9,7 +9,7 @@ exports[`smoke tests w/o a previous session matches snapshot 1`] = `
       class="navbar-brand"
       href="#"
     >
-      Ambitious ArcGIS App
+      Test Title
     </a>
     <button
       class="navbar-toggler"
@@ -72,7 +72,7 @@ exports[`smoke tests w/o a previous session matches snapshot 1`] = `
       <h1
         class="display-3 text-light text-center mb-5"
       >
-        Ambitious ArcGIS App
+        Test Title
       </h1>
       <form
         class="search-form undefined"

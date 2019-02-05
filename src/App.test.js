@@ -5,19 +5,20 @@ import App from './App';
 
 describe('smoke tests', function() {
   describe('w/o a previous session', function() {
+    const title = 'Test Title';
     it('renders app title and sign in button', () => {
       const { getByText } = render(
         <Router>
-          <App />
+          <App title={title} />
         </Router>
       );
-      expect(getByText('Ambitious ArcGIS App')).toBeInTheDocument();
+      expect(getByText(title)).toBeInTheDocument();
       expect(getByText('Sign In')).toBeInTheDocument();
     });
     it('matches snapshot', () => {
       const { asFragment } = render(
         <Router>
-          <App />
+          <App title={title} />
         </Router>
       );
       expect(asFragment()).toMatchSnapshot();

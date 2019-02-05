@@ -22,10 +22,10 @@ class AppNav extends React.Component {
     });
   };
   render() {
-    const { userMenu } = this.props;
+    const { title, userMenu } = this.props;
     return (
       <Navbar color="dark" dark expand="md" fixed="top">
-        <NavbarBrand href="#">Ambitious ArcGIS App</NavbarBrand>
+        <NavbarBrand href="#">{title}</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav navbar>
