@@ -5,7 +5,7 @@ function inputGroupClass(size) {
   return `input-group ${sizeClass}`.trim();
 }
 
-function AgoSearch({ q, size, onSearch }) {
+function AgoSearch({ q, size, onSearch, className }) {
   // use a copy of the search term so that we don't immediately update bound URL parameters
   const [searchCopy, setSearchCopy] = useState(q || '');
   function onChange(e) {
@@ -20,8 +20,9 @@ function AgoSearch({ q, size, onSearch }) {
       onSearch(searchCopy);
     }
   }
+  const formClassName = `search-form${className ? ' ' + className : ''}`;
   return (
-    <form className="search-form" onSubmit={onSubmit}>
+    <form className={formClassName} onSubmit={onSubmit}>
       <div className={inputGroupClass(size)}>
         <input
           className="form-control"
