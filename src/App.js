@@ -10,14 +10,11 @@ import Items from './routes/Items';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // NOTE: I'm a bit wary of using props/state for session
-    // since it is an instance of a class, but:
-    // - I haven't found anyone explicitly saying it's an anti-pattern
-    //   to use props/state for a class instance
-    // - some session props (trustedServers) will be lost if we instead
-    //   pass around and re-hydrate a serialized or JSON session
-    // - it works, so ¯\_(ツ)_/¯
-    // initialize state from previous session (if any)
+    // set application state
+    // NOTE: when storing objects like session or user in state
+    // React uses the Object.is() comparison algorithm to detect changes
+    // and changes to child properties won't trigger a re-render
+    // which is fine for this application, b/c we only ever set session/user
     this.state = {
       session: props.previousSession
     };
