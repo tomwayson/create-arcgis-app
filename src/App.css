@@ -17,5 +17,7 @@ body {
 /* map */
 .extents-map {
   height: 300px;
+}
+.extents-map.esri-view {
   margin-bottom: 20px;
 }
