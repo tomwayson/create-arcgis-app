@@ -22,7 +22,9 @@ function App({ previousSession, title }) {
       session.getUser().then(setUser);
     }
   }, [session]);
-  // event handlers
+  // use inline functions for event handlers, and yes, thats OK
+  // see: https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-functions-in-render
+  // and: https://cdb.reacttraining.com/react-inline-functions-and-performance-bdff784f5578
   function onSignIn() {
     // make session available to the app once the user signs in
     signIn().then(setSession);
