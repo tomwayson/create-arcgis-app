@@ -1,39 +1,47 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useReducer, useEffect, useCallback } from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
 import { signIn, signOut } from './utils/session';
+import { actionTypes, appReducer } from './reducers/app';
 import AppNav from './components/AppNav';
 import UserMenu from './components/UserMenu';
 import Home from './routes/Home';
 import Items from './routes/Items';
 
 function App({ previousSession, title }) {
-  // hooks
+  // use a reducer for state to help manage the interdependent
+  // and asynchronous nature of session and user state
+  const [state, dispatch] = useReducer(appReducer, {
+    // TODO: add title to state?
+    session: previousSession
+  });
   // NOTE: when storing objects like session or user in state
   // React uses the Object.is() comparison algorithm to detect changes
-  // and changes to child properties won't trigger a re-render
-  // which is fine for this application, b/c we only ever set session/user
-  const [session, setSession] = useState(previousSession);
-  const [user, setUser] = useState();
+  // and changes to the object's properties won't trigger a re-render
+  // which is fine for this application, b/c we don't mutate their properties
+  const { session, user } = state;
+  // (re)fetch user info when the session is first initialized or has updated
   useEffect(() => {
     if (session && !user) {
-      // session has been initialized, but we don't have the user info yet
       // fetch user info and make available to the app as state
-      session.getUser().then(setUser);
+      session.getUser().then(newUser => {
+        dispatch({ type: actionTypes.setUser, user: newUser });
+      });
     }
   }, [session]);
   // use memoized callback functions for event handlers
   // see: https://reactjs.org/docs/hooks-reference.html#usecallback
   const onSignIn = useCallback(() => {
     // make session available to the app once the user signs in
-    signIn().then(setSession);
-    // NOTE: I'm not sure if [setSession] is needed, but the above docs say:
+    signIn().then(newSession => {
+      dispatch({ type: actionTypes.setSession, session: newSession });
+    });
+    // NOTE: I'm not sure if [dispatch] is needed, but the above docs say:
     // "every value referenced inside the callback should also appear in the inputs array."
-  }, [setSession]);
+  }, [dispatch]);
   const onSignOut = useCallback(() => {
     // signal to app that the user has signed out by clearing user & session
-    setUser(null);
-    setSession(null);
+    dispatch({ type: actionTypes.signOut });
     // clear the cookie, etc.
     signOut();
     // NOTE: I'm not sure if [] is needed, but in theory
