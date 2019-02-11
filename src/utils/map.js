@@ -34,10 +34,9 @@ export function newMap(element, mapOptions) {
         // prevents zooming with the mouse-wheel event
         evt.stopPropagation();
       });
-      // let the caller know that the map is available
-      // and pass back a function to refresh graphics
-      // that has access to the esri/Graphic class and the view instance
-      // through closure scope
+      // let the caller know that the map is available and
+      // return a function to refresh graphics that has access to
+      // the esri/Graphic class and the view instance through closure scope
       return jsonGraphics => {
         if (!view || !view.ready) {
           return;
