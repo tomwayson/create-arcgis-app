@@ -1,38 +1,27 @@
 import { newMap, coordsToExtent } from '../utils/map';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
-// import { render, wait } from 'react-testing-library';
+import { render, wait } from 'react-testing-library';
 import ExtentsMap from './ExtentsMap';
 
 jest.mock('../utils/map');
 
 describe('components', function() {
-  let container;
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-  });
-  afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
-  });
   describe('ExtentsMap', function() {
     it('should render with no items', function() {
       // mock newMap() and the function to refresh graphics that it returns
       const refreshGraphics = jest.fn();
       newMap.mockResolvedValue(refreshGraphics);
       // render component to the page
-      // let result;
+      let result;
+      // NOTE: this does *not* fix the warnings about act() that show in the test console
       act(() => {
-        // result = render(<ExtentsMap />);
-        ReactDOM.render(<ExtentsMap />, container);
+        // NOTE: this is still calling
+        result = render(<ExtentsMap />);
       });
-      // const { getByTestId } = result;
+      const { getByTestId } = result;
       // validate that the the DOM node was rendered
-      // expect(getByTestId('map')).toBeInTheDocument();
-      const mapDiv = container.querySelector('[data-testid="map"]');
-      expect(mapDiv).toBeDefined();
+      expect(getByTestId('map')).toBeInTheDocument();
       // validate that newMap() was called w/ a DOM node and map options
       expect(newMap.mock.calls.length).toBe(1);
       const newMapArgs = newMap.mock.calls[0];
@@ -41,11 +30,11 @@ describe('components', function() {
         basemap: 'gray'
       });
       // wait (one tick) for mocked newMap() to resolve
-      // return wait().then(() => {
-      //   // validate that refreshGraphics() was called w/ the correct arguments
-      //   expect(refreshGraphics.mock.calls.length).toBe(1);
-      //   expect(refreshGraphics.mock.calls[0][0]).toBeUndefined();
-      // });
+      return wait().then(() => {
+        // validate that refreshGraphics() was called w/ the correct arguments
+        expect(refreshGraphics.mock.calls.length).toBe(1);
+        expect(refreshGraphics.mock.calls[0][0]).toBeUndefined();
+      });
     });
     // it('should call refreshGraphics with an array of graphics for each item', function() {
     //   // mock newMap() and the function to refresh graphics that it returns
