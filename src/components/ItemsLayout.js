@@ -5,8 +5,8 @@ import ExtentsMap from './ExtentsMap';
 import ItemsTable from './ItemsTable';
 
 function ItemsLayout({ results, total, num, q, start, onParamsChange }) {
-  // memoized callbacks for action handlers
-  // NOTE: it's probably fine to just use inline fns in the JSX below instead
+  // use memoized callbacks for action handlers
+  // NOTE: it's probably fine to just use inline fns instead
   // see: https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-functions-in-render
   const onSearch = useCallback(
     newQ => {

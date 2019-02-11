@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
 import { signIn, signOut } from './utils/session';
@@ -22,20 +22,23 @@ function App({ previousSession, title }) {
       session.getUser().then(setUser);
     }
   }, [session]);
-  // use inline functions for event handlers, and yes, thats OK
-  // see: https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-functions-in-render
-  // and: https://cdb.reacttraining.com/react-inline-functions-and-performance-bdff784f5578
-  function onSignIn() {
+  // use memoized callback functions for event handlers
+  // see: https://reactjs.org/docs/hooks-reference.html#usecallback
+  const onSignIn = useCallback(() => {
     // make session available to the app once the user signs in
     signIn().then(setSession);
-  }
-  function onSignOut() {
+    // NOTE: I'm not sure if [setSession] is needed, but the above docs say:
+    // "every value referenced inside the callback should also appear in the inputs array."
+  }, [setSession]);
+  const onSignOut = useCallback(() => {
     // signal to app that the user has signed out by clearing user & session
     setUser(null);
     setSession(null);
     // clear the cookie, etc.
     signOut();
-  }
+    // NOTE: I'm not sure if [] is needed, but in theory
+    // it causes this callback to only be created once per component instance
+  }, []);
   // NOTE: we bind the user menu and render it here
   // and pass it to the nav menu in order to avoid prop drilling
   // see: https://reactjs.org/docs/context.html#before-you-use-context
