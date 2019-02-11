@@ -1,5 +1,6 @@
 import { newMap, coordsToExtent } from '../utils/map';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { render, wait } from 'react-testing-library';
 import ExtentsMap from './ExtentsMap';
 
@@ -12,7 +13,13 @@ describe('components', function() {
       const refreshGraphics = jest.fn();
       newMap.mockResolvedValue(refreshGraphics);
       // render component to the page
-      const { getByTestId } = render(<ExtentsMap />);
+      let result;
+      // NOTE: this does *not* fix the warnings about act() that show in the test console
+      act(() => {
+        // NOTE: this is still calling
+        result = render(<ExtentsMap />);
+      });
+      const { getByTestId } = result;
       // validate that the the DOM node was rendered
       expect(getByTestId('map')).toBeInTheDocument();
       // validate that newMap() was called w/ a DOM node and map options
@@ -58,7 +65,9 @@ describe('components', function() {
         }
       ];
       // render component to the page
-      const { getByText } = render(<ExtentsMap items={items} />);
+      act(() => {
+        render(<ExtentsMap items={items} />);
+      });
       // wait (one tick) for mocked newMap() to resolve
       return wait().then(() => {
         // validate that refreshGraphics() was called w/ the correct arguments
