@@ -21,14 +21,3 @@ export function parseSearch(search) {
     start: start ? parseInt(start) : defaults.start
   };
 }
-
-/**
- * compare previous search params to the current ones and return true if they've changed
- * @param {object} prevLocation
- * @param {object} location
- */
-export function didSearchParamsChange(prevLocation, location) {
-  const prevSearch = prevLocation && prevLocation.search;
-  const search = location && location.search;
-  return search !== prevSearch;
-}

@@ -75,7 +75,7 @@ exports[`smoke tests w/o a previous session matches snapshot 1`] = `
         Test Title
       </h1>
       <form
-        class="search-form undefined"
+        class="search-form"
       >
         <div
           class="input-group input-group-lg"
