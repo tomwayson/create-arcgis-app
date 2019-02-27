@@ -1,6 +1,6 @@
 import React from 'react';
 import config from '../config/map';
-import { newMap, coordsToExtent } from '../utils/map';
+import { loadMap, showItemsOnMap } from '../utils/map';
 
 class ExtentsMap extends React.Component {
   constructor(props) {
@@ -9,43 +9,37 @@ class ExtentsMap extends React.Component {
     // see: https://reactjs.org/docs/refs-and-the-dom.html
     this.mapNode = React.createRef();
   }
-  showItemsOnMap() {
-    if (!this.refreshGraphics) {
-      // map hasn't been loaded yet
-      return;
-    }
-    // create an array of JSON graphics from the items
-    const { items } = this.props;
+
+  // show items on the map w/ the symbol and popupTemplate from the config
+  showItems() {
     const { symbol, popupTemplate } = config.itemExtents;
-    const jsonGraphics =
-      items &&
-      items.map(item => {
-        const geometry = coordsToExtent(item.extent);
-        return { geometry, symbol, attributes: item, popupTemplate };
-      });
-    this.refreshGraphics(jsonGraphics);
+    showItemsOnMap(this._view, this.props.items, symbol, popupTemplate);
   }
+
   // react lifecycle methods
+  // wait until after the component is added to the DOM before creating the map
   componentDidMount() {
-    // load and render the map
-    newMap(this.mapNode.current, config.options).then(refreshGraphics => {
-      // hold onto function to refresh graphics
+    // create a map at this element's DOM node
+    loadMap(this.mapNode.current, config.options).then(view => {
+      // hold onto a reference to the map view
       // NOTE: we don't use props/state for this b/c we don't want to trigger a re-render
       // see https://medium.freecodecamp.org/where-do-i-belong-a-guide-to-saving-react-component-data-in-state-store-static-and-this-c49b335e2a00#978c
-      this.refreshGraphics = refreshGraphics;
+      this._view = view;
       // show the initial items on the map
-      this.showItemsOnMap();
+      this.showItems();
     });
   }
   componentDidUpdate(prevProps) {
     if (prevProps.items !== this.props.items) {
-      this.showItemsOnMap();
+      this.showItems();
     }
   }
+  // destroy the map before this component is removed from the DOM
   componentWillUnmount() {
-    // this may not be needed, but it should help
-    // ensure the map and view are scheduled for garbage collection
-    delete this.refreshGraphics;
+    if (this._view) {
+      this._view.container = null;
+      delete this._view;
+    }
   }
   render() {
     return <div className="extents-map" data-testid="map" ref={this.mapNode} />;
