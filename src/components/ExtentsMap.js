@@ -30,7 +30,7 @@ class ExtentsMap extends React.Component {
     });
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.items !== this.props.items) {
+    if (prevProps.items !== this.props.items && this._view) {
       this.showItems();
     }
   }
