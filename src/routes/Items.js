@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert } from 'reactstrap';
-import { searchItems } from '@esri/arcgis-rest-items';
+import { searchItems } from '@esri/arcgis-rest-portal';
 import { parseSearch } from '../utils/search';
 import ItemsLayout from '../components/ItemsLayout';
 
@@ -18,15 +18,13 @@ function Items({ history, location, session }) {
   const { num, q, start } = parseSearch(search);
   // (re)execute search whenever the query params or session changes
   useEffect(() => {
+    console.log('in: ' + q);
     if (!q) {
       // invalid search term, emulate an empty response rather than sending a request
       setState({ ...initialState });
     } else {
       // execute search and update state
-      searchItems({
-        searchForm: { num, q, start },
-        authentication: session
-      })
+      searchItems({ num: num, q: q, start: start, authentication: session })
         .then(({ results, total }) => {
           setState({ error: null, results, total });
         })

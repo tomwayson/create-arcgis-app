@@ -9,7 +9,7 @@ export function loadMap(element, mapOptions) {
   return loadModules(
     ['esri/Map', 'esri/views/MapView', 'esri/Graphic'],
     // NOTE: keep this current w/ the latest version of the JSAPI
-    { css: 'https://js.arcgis.com/4.10/esri/css/main.css' }
+    { css: 'https://js.arcgis.com/4.11/esri/css/main.css' }
   ).then(([Map, MapView, Graphic]) => {
     if (!element) {
       // component or app was likely destroyed
