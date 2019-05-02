@@ -7,13 +7,13 @@ describe('smoke tests', function() {
   describe('w/o a previous session', function() {
     const title = 'Test Title';
     it('renders app title and sign in button', () => {
-      const { getByText } = render(
+      const { getAllByText } = render(
         <Router>
           <App title={title} />
         </Router>
       );
-      expect(getByText(title)).toBeInTheDocument();
-      expect(getByText('Sign In')).toBeInTheDocument();
+      expect(getAllByText(title)[0]).toBeInTheDocument();
+      expect(getAllByText('Sign In')[0]).toBeInTheDocument();
     });
     it('matches snapshot', () => {
       const { asFragment } = render(

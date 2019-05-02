@@ -6,11 +6,9 @@ let _Graphic;
 // lazy load the ArcGIS API modules and CSS
 // then create a new map view at an element
 export function loadMap(element, mapOptions) {
-  return loadModules(
-    ['esri/Map', 'esri/views/MapView', 'esri/Graphic'],
-    // NOTE: keep this current w/ the latest version of the JSAPI
-    { css: 'https://js.arcgis.com/4.10/esri/css/main.css' }
-  ).then(([Map, MapView, Graphic]) => {
+  return loadModules(['esri/Map', 'esri/views/MapView', 'esri/Graphic'], {
+    css: true
+  }).then(([Map, MapView, Graphic]) => {
     if (!element) {
       // component or app was likely destroyed
       return;
