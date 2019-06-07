@@ -35,6 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "prebuild": "npm run copy:auth",
+    "copy:auth": "cp ./node_modules/@esri/arcgis-rest-auth/dist/umd/auth.umd.min.js ./public/auth.umd.min.js",
     "build": "react-scripts build",
     "predeploy": "npm run build && mv build/index.html build/200.html",
     "deploy": "surge ./build create-arcgis-app.surge.sh",
